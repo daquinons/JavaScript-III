@@ -33,9 +33,9 @@ GameObject.prototype.destroy = function() {
   * should inherit destroy() from GameObject's prototype
 */
 
-function CharacterStats(obj) {
-  GameObject.call(this, obj);
-  this.healthPoints = obj.healthPoints;
+function CharacterStats(object) {
+  GameObject.call(this, object);
+  this.healthPoints = object.healthPoints;
 }
 
 CharacterStats.prototype = Object.create(GameObject.prototype);
@@ -55,12 +55,12 @@ CharacterStats.prototype.takeDamage = function() {
   * should inherit takeDamage() from CharacterStats
 */
 
-function Humanoid(obj) {
-  CharacterStats.call(this, obj);
-  this.team = obj.team;
-  this.weapons = obj.weapons;
-  this.language = obj.language;
-  this.damagePoints = obj.damagePoints;
+function Humanoid(object) {
+  CharacterStats.call(this, object);
+  this.team = object.team;
+  this.weapons = object.weapons;
+  this.language = object.language;
+  this.damagePoints = object.damagePoints;
 }
 
 Humanoid.prototype = Object.create(CharacterStats.prototype);
@@ -144,8 +144,8 @@ Humanoid.prototype.greet = function() {
   // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
   // * Create two new objects, one a villain and one a hero and fight it out with methods!
 
-  function Hero(obj) {
-    Humanoid.call(this, obj);
+  function Hero(object) {
+    Humanoid.call(this, object);
     this.braveryMultiplier = 1.5;
   }
 
@@ -162,8 +162,8 @@ Humanoid.prototype.greet = function() {
   }
 
 
-  function Villain(obj) {
-    Humanoid.call(this, obj);
+  function Villain(object) {
+    Humanoid.call(this, object);
     this.evilMultiplier = 1.25;
   }
 
