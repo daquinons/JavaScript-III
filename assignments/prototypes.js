@@ -60,6 +60,7 @@ function Humanoid(obj) {
   this.team = obj.team;
   this.weapons = obj.weapons;
   this.language = obj.language;
+  this.damagePoints = obj.damagePoints;
 }
 
 Humanoid.prototype = Object.create(CharacterStats.prototype);
@@ -142,3 +143,80 @@ Humanoid.prototype.greet = function() {
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
   // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
   // * Create two new objects, one a villain and one a hero and fight it out with methods!
+
+  function Hero(obj) {
+    Humanoid.call(this, obj);
+    this.braveryMultiplier = 1.5;
+  }
+
+  Hero.prototype = Object.create(Humanoid.prototype);
+
+  Hero.prototype.attack = function(toCharacter) {
+    let totalDamage = this.braveryMultiplier * this.damagePoints;
+    toCharacter.healthPoints -= totalDamage;
+    if (toCharacter.healthPoints <= 0) {
+      return toCharacter.destroy();
+    }
+
+    return toCharacter.takeDamage();
+  }
+
+
+  function Villain(obj) {
+    Humanoid.call(this, obj);
+    this.evilMultiplier = 1.25;
+  }
+
+  Villain.prototype = Object.create(Humanoid.prototype);
+
+  Villain.prototype.attack = function(toCharacter) {
+    let totalDamage = this.evilMultiplier * this.damagePoints;
+    toCharacter.healthPoints -= totalDamage;
+    if (toCharacter.healthPoints <= 0) {
+      return toCharacter.destroy();
+    }
+
+    return toCharacter.takeDamage();
+  }
+
+  let hero = new Hero({
+    createdAt: new Date(),
+    dimensions: {
+      length: 1,
+      width: 2,
+      height: 4,
+    },
+    healthPoints: 10,
+    name: 'Tony Stark',
+    team: 'Avengers',
+    weapons: [
+      'Iron Man Suit'
+    ],
+    language: 'English',
+    damagePoints: 5,
+  })
+
+  console.log(hero);
+
+  let villain = new Villain({
+    createdAt: new Date(),
+    dimensions: {
+      length: 2,
+      width: 2,
+      height: 2,
+    },
+    healthPoints: 15,
+    name: 'Thanos',
+    team: 'Bad Guys',
+    weapons: [
+      'Infinity Stones'
+    ],
+    language: 'Common Tongue',
+    damagePoints: 7,
+  })
+
+  console.log(villain);
+
+  console.log(hero.attack(villain));
+  console.log(villain.attack(hero));
+  console.log(hero.attack(villain));
